@@ -52,7 +52,6 @@ export class NotificationManager {
                     ]
                 })
             } else if (window.Notification) {
-                // eslint-disable-next-line no-new
                 new Notification(item.title, {
                     body: item.body
                 })

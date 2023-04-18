@@ -21,7 +21,11 @@ export class ShareManager {
 
     static async share(config: ShareConfig) {
         if (ShareManager.isSupportNative() === false) {
-            await ClipboardManager.write(config.url || '')
+            await ClipboardManager.write(`
+                ${config.title}
+                ${config.text}
+                ${config.url}
+            `)
             confirm(t('Copyed'))
         } else {
             let IsApp = Capacitor.isNativePlatform()
