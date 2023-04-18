@@ -1,5 +1,6 @@
 import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
 import { serviceException } from '../error'
 import { Camera, CameraResultType } from '@capacitor/camera'
 
@@ -21,16 +22,23 @@ export class CameraManager {
                     failType: 'none'
                 }
             }
-            if (result.camera === 'denied' || result.camera === 'prompt') {
+            if (result.camera === 'prompt' || result.camera === 'prompt-with-rationale') {
+                let result = await Camera.requestPermissions()
+                if (result.camera === 'granted') {
+                    return {
+                        pass: true,
+                        failType: 'none'
+                    }
+                }
+                return {
+                    pass: false,
+                    failType: 'no_permission'
+                }
+            }
+            if (result.camera === 'denied') {
                 let res = confirm(t('RequestCameraPermission'))
                 if (res) {
-                    let result = await Camera.requestPermissions()
-                    if (result.camera === 'granted' && result.photos === 'granted') {
-                        return {
-                            pass: true,
-                            failType: 'none'
-                        }
-                    }
+                    await BarcodeScanner.openAppSettings()
                 }
                 return {
                     pass: false,
@@ -40,7 +48,7 @@ export class CameraManager {
         }
         return {
             pass: false,
-            failType: 'only_app'
+            failType: 'unknown'
         }
     }
 

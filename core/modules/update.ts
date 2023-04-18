@@ -5,9 +5,12 @@ export class AppUpdateManager {
     static async hasNewVersion() {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
-            const { currentVersion } = await AppUpdate.getAppUpdateInfo()
-            const { availableVersion } = await AppUpdate.getAppUpdateInfo()
-            return currentVersion !== availableVersion
+            try {
+                const { currentVersion, availableVersion } = await AppUpdate.getAppUpdateInfo()
+                return currentVersion !== availableVersion
+            } catch (error) {
+                return false
+            }
         } else {
             return false
         }
