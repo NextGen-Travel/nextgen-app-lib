@@ -2,38 +2,53 @@ import { App } from '@capacitor/app'
 import { Event } from 'power-helper'
 import { Capacitor } from '@capacitor/core'
 
-const LocalLaunchUrl = location.href
-
 type Channels = {
     appUrlOpen: {
         url: string
     }
+    backButton: {
+        canGoBack: boolean
+    }
 }
 
-export class AppManager extends Event<Channels> {
-    appEvents: Array<{ remove: () => void }> = []
-    async getLaunchUrl() {
+window.__ng_app_state.app = {
+    launchUrl: location.href,
+    globEvent: new Event<Channels>()
+}
+
+export class AppManager {
+    static platform() {
+        return Capacitor.getPlatform() as 'web' | 'android' | 'ios'
+    }
+
+    static isApp() {
+        return Capacitor.isNativePlatform()
+    }
+
+    static get event(): Event<Channels> {
+        return window.__ng_app_state.app?.globEvent
+    }
+
+    static async getLaunchUrl() {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
             let result = await App.getLaunchUrl()
-            return result?.url || LocalLaunchUrl
+            return result?.url || window.__ng_app_state.app.launchUrl
         } else {
-            return LocalLaunchUrl
+            return window.__ng_app_state.app.launchUrl
         }
     }
 
-    async startListener() {
+    static async installListener() {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
-            this.appEvents.push(
-                await App.addListener('appUrlOpen', (data) => {
-                    this.emit('appUrlOpen', data)
-                })
-            )
+            await App.addListener('appUrlOpen', (data) => {
+                AppManager.event.emit('appUrlOpen', data)
+            }),
+            await App.addListener('backButton', (data) => {
+                AppManager.event.emit('backButton', data)
+                return false
+            })
         }
-    }
-
-    closeListener() {
-        this.appEvents.forEach(e => e.remove())
     }
 }

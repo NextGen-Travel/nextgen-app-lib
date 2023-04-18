@@ -1,5 +1,6 @@
 import { i18n } from './i18n'
 
+window.__ng_app_state = {} as any
 window.__ng_app_config = {
     libOptions: {
         lang: 'en-US',
