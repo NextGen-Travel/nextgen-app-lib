@@ -1,16 +1,19 @@
+import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
 
 type BarcodeScannerPermission = {
     pass: boolean
-    failType: 'no_permission' | 'none' | 'unknown'
+    failType: 'no_permission' | 'none' | 'unknown' | 'only_app'
 }
 
 export class BarcodeScannerManager {
     static async requestPermissions(): Promise<BarcodeScannerPermission> {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
-            let result = await BarcodeScanner.checkPermission({ force: true })
+            let result = await BarcodeScanner.checkPermission({
+                force: true
+            })
             if (result.granted) {
                 return {
                     pass: true,
@@ -18,7 +21,7 @@ export class BarcodeScannerManager {
                 }
             }
             if (result.denied) {
-                let res = confirm('If you want to grant permission for using your camera, enable it in the app settings.')
+                let res = confirm(t('RequestCameraPermission'))
                 if (res) {
                     BarcodeScanner.openAppSettings()
                 }
@@ -28,8 +31,8 @@ export class BarcodeScannerManager {
                 }
             }
             if (result.neverAsked) {
-                let c = confirm('We need your permission to use your camera to be able to scan barcode')
-                if (c === false) {
+                let res = confirm(t('FirstRequestCameraPermission'))
+                if (res === false) {
                     return {
                         pass: false,
                         failType: 'no_permission'
@@ -39,7 +42,7 @@ export class BarcodeScannerManager {
         }
         return {
             pass: false,
-            failType: 'unknown'
+            failType: 'only_app'
         }
     }
 
@@ -58,6 +61,8 @@ export class BarcodeScannerManager {
                         data: result.content
                     }
                 }
+            } catch (e) {
+                BarcodeScanner.stopScan()
             } finally {
                 BarcodeScanner.showBackground()
                 targetElement.style.display = originDisplay

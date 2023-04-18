@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "lib.",
   "main": "./index.js",
-  "types": "./types",
   "scripts": {
     "test": "eslint core/** && vue-tsc --noEmit",
     "deploy": "ts-node ./deploy/index.ts",

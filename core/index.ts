@@ -1,4 +1,5 @@
 import { i18n } from './i18n'
+import { Locales } from './locales'
 
 window.__ng_app_state = {} as any
 window.__ng_app_config = {
@@ -14,7 +15,7 @@ window.__ng_app_config = {
 
 export const useLibOptions = () => window.__ng_app_config.libOptions
 export const useLibEnv = () => window.__ng_app_config.libEnv
-export const t = (key: string, params = {}) => i18n.key(key as any, params).get(window.__ng_app_config.libOptions.lang)
+export const t = (key: keyof (typeof Locales['zh-TW']), params = {}) => i18n.key(key as any, params).get(window.__ng_app_config.libOptions.lang)
 
 export const NextgenAppLib = {
     install(params: {

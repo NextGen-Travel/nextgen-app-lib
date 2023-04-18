@@ -1,17 +1,20 @@
+import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
+import { serviceException } from '../error'
 import { Camera, CameraResultType } from '@capacitor/camera'
 
 type CameraPermission = {
     pass: boolean
-    failType: 'no_permission' | 'none' | 'unknown'
+    failType: 'no_permission' | 'none' | 'unknown' | 'only_app'
 }
+
+const exception = serviceException.checkout('CameraManager')
 
 export class CameraManager {
     static async requestPermissions(): Promise<CameraPermission> {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
             let result = await Camera.checkPermissions()
-
             if (result.camera === 'granted') {
                 return {
                     pass: true,
@@ -19,7 +22,7 @@ export class CameraManager {
                 }
             }
             if (result.camera === 'denied' || result.camera === 'prompt') {
-                let res = confirm('If you want to grant permission for using your camera, enable it in the app settings.')
+                let res = confirm(t('RequestCameraPermission'))
                 if (res) {
                     Camera.requestPermissions()
                 }
@@ -31,22 +34,24 @@ export class CameraManager {
         }
         return {
             pass: false,
-            failType: 'unknown'
+            failType: 'only_app'
         }
     }
 
-    static async takePicture() {
+    static async getPhoto() {
         let pass = (await CameraManager.requestPermissions()).pass
         if (pass) {
             const image = await Camera.getPhoto({
                 quality: 100,
                 allowEditing: true,
-                resultType: CameraResultType.Uri
+                resultType: CameraResultType.Uri,
+                promptLabelHeader: t('SelectPictureSource'),
+                promptLabelCancel: t('Cancel'),
+                promptLabelPhoto: t('Album'),
+                promptLabelPicture: t('Camera')
             })
             return image.webPath
         }
-        return {
-            data: null
-        }
+        throw exception.create('Not in the app')
     }
 }
