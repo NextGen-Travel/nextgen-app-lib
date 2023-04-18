@@ -24,22 +24,20 @@ function sourceToBlob(source: Blob | HTMLImageElement | HTMLCanvasElement | HTML
                     canvas.width = image.width
                     canvas.height = image.height
                     context?.drawImage(image, 0, 0)
-                    canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
-                };
+                    canvas.toBlob(blob => resolve(blob!), 'image/png')
+                }
                 image.onerror = reject
                 image.src = source.src
-            }
-            if (source instanceof HTMLCanvasElement) {
+            } else if (source instanceof HTMLCanvasElement) {
                 canvas.width = source.width
                 canvas.height = source.height
                 context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
-            }
-            if (source instanceof HTMLVideoElement) {
+                canvas.toBlob(blob => resolve(blob!), 'image/png')
+            } else if (source instanceof HTMLVideoElement) {
                 canvas.width = source.videoWidth
                 canvas.height = source.videoHeight
                 context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
+                canvas.toBlob(blob => resolve(blob!), 'image/png')
             }
         }
     })
@@ -80,20 +78,6 @@ export class ClipboardManager {
                 textarea.select()
                 document.execCommand('copy')
                 textarea.remove()
-            }
-        }
-    }
-
-    /** 讀取文本 */ 
-    static async read() {
-        let IsApp = Capacitor.isNativePlatform()
-        if (IsApp) {
-            await Clipboard.read()
-        } else {
-            if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.read()
-            } else {
-                document.execCommand('paste')
             }
         }
     }

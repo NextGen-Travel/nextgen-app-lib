@@ -24,7 +24,13 @@ export class CameraManager {
             if (result.camera === 'denied' || result.camera === 'prompt') {
                 let res = confirm(t('RequestCameraPermission'))
                 if (res) {
-                    Camera.requestPermissions()
+                    let result = await Camera.requestPermissions()
+                    if (result.camera === 'granted' && result.photos === 'granted') {
+                        return {
+                            pass: true,
+                            failType: 'none'
+                        }
+                    }
                 }
                 return {
                     pass: false,
@@ -39,19 +45,19 @@ export class CameraManager {
     }
 
     static async getPhoto() {
-        let pass = (await CameraManager.requestPermissions()).pass
+        let { pass, failType } = await CameraManager.requestPermissions()
         if (pass) {
             const image = await Camera.getPhoto({
                 quality: 100,
                 allowEditing: true,
-                resultType: CameraResultType.Uri,
+                resultType: CameraResultType.Base64,
                 promptLabelHeader: t('SelectPictureSource'),
                 promptLabelCancel: t('Cancel'),
                 promptLabelPhoto: t('Album'),
                 promptLabelPicture: t('Camera')
             })
-            return image.webPath
+            return `data:image/jpeg;base64,${image.base64String}` || ''
         }
-        throw exception.create('Not in the app')
+        throw exception.create(failType)
     }
 }

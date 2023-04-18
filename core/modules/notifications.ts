@@ -22,7 +22,8 @@ export class NotificationManager {
                     failType: 'none'
                 }
             }
-        } else if (window.Notification) {
+        }
+        if (window.Notification) {
             let result = await Notification.requestPermission()
             if (result === 'granted') {
                 return {

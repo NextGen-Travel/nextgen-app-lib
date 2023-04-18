@@ -1,5 +1,7 @@
-import { Capacitor } from '@capacitor/core'
+import { t } from '../index'
 import { Share } from '@capacitor/share'
+import { Capacitor } from '@capacitor/core'
+import { ClipboardManager } from './clipboard'
 
 type ShareConfig = {
     title: string
@@ -8,7 +10,7 @@ type ShareConfig = {
 }
 
 export class ShareManager {
-    static isSupport(): boolean {
+    static isSupportNative(): boolean {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
             return true
@@ -18,19 +20,24 @@ export class ShareManager {
     }
 
     static async share(config: ShareConfig) {
-        let IsApp = Capacitor.isNativePlatform()
-        if (IsApp) {
-            await Share.share({
-                title: config.title,
-                text: config.text,
-                url: config.url
-            })
+        if (ShareManager.isSupportNative() === false) {
+            await ClipboardManager.write(config.url || '')
+            confirm(t('Copyed'))
         } else {
-            await navigator.share({
-                title: config.title,
-                text: config.text,
-                url: config.url
-            })
+            let IsApp = Capacitor.isNativePlatform()
+            if (IsApp) {
+                await Share.share({
+                    title: config.title,
+                    text: config.text,
+                    url: config.url
+                })
+            } else {
+                await navigator.share({
+                    title: config.title,
+                    text: config.text,
+                    url: config.url
+                })
+            }
         }
     }
 }
