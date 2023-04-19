@@ -11,6 +11,12 @@ type NotificationPermission = {
     failType: 'unknown' | 'none'
 }
 
+function randId() {
+    const min = -2147483647
+    const max = 2147483646
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
 export class NotificationManager {
     static async requestPermissions(): Promise<NotificationPermission> {
         let IsApp = Capacitor.isNativePlatform()
@@ -46,7 +52,7 @@ export class NotificationManager {
                 await LocalNotifications.schedule({
                     notifications: [
                         {
-                            id: Date.now(),
+                            id: randId(),
                             ...item
                         }
                     ]

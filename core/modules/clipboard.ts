@@ -56,6 +56,7 @@ export class ClipboardManager {
                 })
             } else {
                 const dataUrl = await blobToDataURL(source)
+                console.log('CCC', dataUrl)
                 await Clipboard.write({
                     image: dataUrl
                 })
