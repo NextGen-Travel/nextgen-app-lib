@@ -8,14 +8,10 @@ export class BrowserManager {
                 url,
                 windowName: nameType
             })
-            return {
-                close: () => Browser.close()
-            }
+            return {}
         } else {
-            const target = window.open(url, nameType)
-            return {
-                close: () => target?.close()
-            }
+            window.open(url, nameType)
+            return {}
         }
     }
 }

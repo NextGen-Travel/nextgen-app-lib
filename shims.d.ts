@@ -9,6 +9,9 @@ declare global {
                 launchUrl: string
                 globEvent: Event
             }
+            barcodeScanner: {
+                scanning: boolean
+            }
         }
         __ng_app_config: {
             libOptions: {
