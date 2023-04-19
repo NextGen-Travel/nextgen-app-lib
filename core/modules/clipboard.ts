@@ -1,5 +1,9 @@
+import { t } from '../index'
+import { serviceException } from '../error'
 import { Clipboard } from '@capacitor/clipboard'
 import { Capacitor } from '@capacitor/core'
+
+const exception = serviceException.checkout('ClipboardManager')
 
 function blobToDataURL(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -12,19 +16,8 @@ function blobToDataURL(blob: Blob): Promise<string> {
 
 /** 將圖片, 影片, canvas 轉成 blob */
 function sourceToBlob(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement): Promise<Blob> {
-    return new Promise<Blob>(async(resolve, reject) => {
-        try {
-            const canvas = await sourceToCanvas(source)
-            canvas.toBlob(blob => resolve(blob!), 'image/png')
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
-
-function sourceToCanvas(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
-    return new Promise<HTMLCanvasElement>((resolve, reject) => {
-        if (source instanceof HTMLCanvasElement) {
+    return new Promise<Blob>((resolve, reject) => {
+        if (source instanceof Blob) {
             resolve(source)
         } else {
             const canvas = document.createElement('canvas')
@@ -35,15 +28,20 @@ function sourceToCanvas(source: HTMLImageElement | HTMLCanvasElement | HTMLVideo
                     canvas.width = image.width
                     canvas.height = image.height
                     context?.drawImage(image, 0, 0)
-                    resolve(canvas)
+                    canvas.toBlob(blob => resolve(blob!), 'image/png')
                 }
                 image.onerror = reject
                 image.src = source.src
+            } else if (source instanceof HTMLCanvasElement) {
+                canvas.width = source.width
+                canvas.height = source.height
+                context?.drawImage(source, 0, 0)
+                canvas.toBlob(blob => resolve(blob!), 'image/png')
             } else if (source instanceof HTMLVideoElement) {
                 canvas.width = source.videoWidth
                 canvas.height = source.videoHeight
                 context?.drawImage(source, 0, 0)
-                resolve(canvas)
+                canvas.toBlob(blob => resolve(blob!), 'image/png')
             }
         }
     })
@@ -61,10 +59,14 @@ export class ClipboardManager {
                     string: source
                 })
             } else {
-                const dataUrl = await sourceToCanvas(content as HTMLImageElement | HTMLCanvasElement | HTMLVideoElement)
-                await Clipboard.write({
-                    image: dataUrl.toDataURL()
-                })
+                const dataUrl = await blobToDataURL(source)
+                try {
+                    await Clipboard.write({
+                        image: dataUrl
+                    })
+                } catch (error) {
+                    throw exception.create(t('CopyImageFail'))
+                }
             }
         } else {
             if (navigator.clipboard && window.isSecureContext) {
