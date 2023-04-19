@@ -11,9 +11,20 @@ function blobToDataURL(blob: Blob): Promise<string> {
 }
 
 /** 將圖片, 影片, canvas 轉成 blob */
-function sourceToBlob(source: Blob | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement): Promise<Blob> {
-    return new Promise<Blob>((resolve, reject) => {
-        if (source instanceof Blob) {
+function sourceToBlob(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement): Promise<Blob> {
+    return new Promise<Blob>(async(resolve, reject) => {
+        try {
+            const canvas = await sourceToCanvas(source)
+            canvas.toBlob(blob => resolve(blob!), 'image/png')
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+function sourceToCanvas(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
+    return new Promise<HTMLCanvasElement>((resolve, reject) => {
+        if (source instanceof HTMLCanvasElement) {
             resolve(source)
         } else {
             const canvas = document.createElement('canvas')
@@ -24,20 +35,15 @@ function sourceToBlob(source: Blob | HTMLImageElement | HTMLCanvasElement | HTML
                     canvas.width = image.width
                     canvas.height = image.height
                     context?.drawImage(image, 0, 0)
-                    canvas.toBlob(blob => resolve(blob!), 'image/png')
+                    resolve(canvas)
                 }
                 image.onerror = reject
                 image.src = source.src
-            } else if (source instanceof HTMLCanvasElement) {
-                canvas.width = source.width
-                canvas.height = source.height
-                context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/png')
             } else if (source instanceof HTMLVideoElement) {
                 canvas.width = source.videoWidth
                 canvas.height = source.videoHeight
                 context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/png')
+                resolve(canvas)
             }
         }
     })
@@ -46,7 +52,7 @@ function sourceToBlob(source: Blob | HTMLImageElement | HTMLCanvasElement | HTML
 /** 剪貼簿設計，兼容所有平台 */
 export class ClipboardManager {
     /** 複製文本 */
-    static async write(content: string | Blob | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
+    static async write(content: string | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
         let IsApp = Capacitor.isNativePlatform()
         let source = typeof content === 'string' ? content : await sourceToBlob(content)
         if (IsApp) {
@@ -55,10 +61,9 @@ export class ClipboardManager {
                     string: source
                 })
             } else {
-                const dataUrl = await blobToDataURL(source)
-                console.log('CCC', dataUrl)
+                const dataUrl = await sourceToCanvas(content as HTMLImageElement | HTMLCanvasElement | HTMLVideoElement)
                 await Clipboard.write({
-                    image: dataUrl
+                    image: dataUrl.toDataURL()
                 })
             }
         } else {

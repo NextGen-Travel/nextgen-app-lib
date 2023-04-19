@@ -62,7 +62,8 @@ export class GeoLocationManager {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 }
-            } else if (navigator.geolocation) {
+            }
+            if (navigator.geolocation) {
                 let position: GeolocationPosition = await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(resolve, reject,
                         {
