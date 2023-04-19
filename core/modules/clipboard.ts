@@ -53,7 +53,7 @@ export class ClipboardManager {
     static async write(content: string | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
         let IsApp = Capacitor.isNativePlatform()
         let source = typeof content === 'string' ? content : await sourceToBlob(content)
-        if (IsApp === false) {
+        if (IsApp) {
             if (typeof source === 'string') {
                 await Clipboard.write({
                     string: source
