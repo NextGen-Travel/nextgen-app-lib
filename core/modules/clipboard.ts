@@ -28,7 +28,7 @@ function sourceToBlob(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoEl
                     canvas.width = image.width
                     canvas.height = image.height
                     context?.drawImage(image, 0, 0)
-                    canvas.toBlob(blob => resolve(blob!), 'image/png')
+                    canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
                 }
                 image.onerror = reject
                 image.src = source.src
@@ -36,12 +36,12 @@ function sourceToBlob(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoEl
                 canvas.width = source.width
                 canvas.height = source.height
                 context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/png')
+                canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
             } else if (source instanceof HTMLVideoElement) {
                 canvas.width = source.videoWidth
                 canvas.height = source.videoHeight
                 context?.drawImage(source, 0, 0)
-                canvas.toBlob(blob => resolve(blob!), 'image/png')
+                canvas.toBlob(blob => resolve(blob!), 'image/jpeg')
             }
         }
     })
