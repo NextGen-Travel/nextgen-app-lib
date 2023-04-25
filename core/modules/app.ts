@@ -44,7 +44,7 @@ export class AppManager {
         if (IsApp) {
             await App.addListener('appUrlOpen', (data) => {
                 AppManager.event.emit('appUrlOpen', data)
-            }),
+            })
             await App.addListener('backButton', (data) => {
                 AppManager.event.emit('backButton', data)
                 return false
