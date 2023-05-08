@@ -1,6 +1,6 @@
 import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
+import { AppManager } from './app'
 import { serviceException } from '../error'
 import { Camera, CameraResultType } from '@capacitor/camera'
 
@@ -38,7 +38,7 @@ export class CameraManager {
             if (result.camera === 'denied') {
                 let res = confirm(t('RequestCameraPermission'))
                 if (res) {
-                    await BarcodeScanner.openAppSettings()
+                    await AppManager.openSetting()
                 }
                 return {
                     pass: false,

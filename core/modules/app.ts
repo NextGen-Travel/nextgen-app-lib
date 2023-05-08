@@ -1,8 +1,9 @@
 import { App } from '@capacitor/app'
 import { Event } from 'power-helper'
 import { Capacitor } from '@capacitor/core'
+import { NativeSettings, AndroidSettings, IOSSettings } from 'capacitor-native-settings'
 
-type Channels = {
+type Events = {
     appUrlOpen: {
         url: string
     }
@@ -13,7 +14,7 @@ type Channels = {
 
 window.__ng_app_state.app = {
     launchUrl: location.href,
-    globEvent: new Event<Channels>()
+    globEvent: new Event<Events>()
 }
 
 export class AppManager {
@@ -25,7 +26,14 @@ export class AppManager {
         return Capacitor.isNativePlatform()
     }
 
-    static get event(): Event<Channels> {
+    static openSetting() {
+        return NativeSettings.open({
+            optionAndroid: AndroidSettings.ApplicationDetails,
+            optionIOS: IOSSettings.App
+        })
+    }
+
+    static get event(): Event<Events> {
         return window.__ng_app_state.app?.globEvent
     }
 
