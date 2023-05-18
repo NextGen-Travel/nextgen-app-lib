@@ -1,16 +1,23 @@
+import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
 
 type BarcodeScannerPermission = {
     pass: boolean
-    failType: 'no_permission' | 'none' | 'unknown'
+    failType: 'no_permission' | 'none' | 'unknown' | 'only_app'
+}
+
+window.__ng_app_state.barcodeScanner = {
+    scanning: false
 }
 
 export class BarcodeScannerManager {
     static async requestPermissions(): Promise<BarcodeScannerPermission> {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
-            let result = await BarcodeScanner.checkPermission({ force: true })
+            let result = await BarcodeScanner.checkPermission({
+                force: true
+            })
             if (result.granted) {
                 return {
                     pass: true,
@@ -18,7 +25,7 @@ export class BarcodeScannerManager {
                 }
             }
             if (result.denied) {
-                let res = confirm('If you want to grant permission for using your camera, enable it in the app settings.')
+                let res = confirm(t('RequestCameraPermission'))
                 if (res) {
                     BarcodeScanner.openAppSettings()
                 }
@@ -28,8 +35,8 @@ export class BarcodeScannerManager {
                 }
             }
             if (result.neverAsked) {
-                let c = confirm('We need your permission to use your camera to be able to scan barcode')
-                if (c === false) {
+                let res = confirm(t('FirstRequestCameraPermission'))
+                if (res === false) {
                     return {
                         pass: false,
                         failType: 'no_permission'
@@ -39,7 +46,7 @@ export class BarcodeScannerManager {
         }
         return {
             pass: false,
-            failType: 'unknown'
+            failType: 'only_app'
         }
     }
 
@@ -52,6 +59,7 @@ export class BarcodeScannerManager {
             targetElement.style.display = 'none'
             targetElement.style.background = 'transparent'
             try {
+                window.__ng_app_state.barcodeScanner.scanning = true
                 let result = await BarcodeScanner.startScan()
                 if (result.hasContent) {
                     return {
@@ -59,9 +67,7 @@ export class BarcodeScannerManager {
                     }
                 }
             } finally {
-                BarcodeScanner.showBackground()
-                targetElement.style.display = originDisplay
-                targetElement.style.background = originBackground
+                BarcodeScannerManager.stopBarcodeScanner(targetElement, originDisplay, originBackground)
             }
         }
         return {
@@ -69,9 +75,15 @@ export class BarcodeScannerManager {
         }
     }
 
-    static stopBarcodeScanner(targetElement = document.body) {
-        targetElement.style.display = 'block'
+    static stopBarcodeScanner(targetElement = document.body, originDisplay = 'block', originBackground = 'transparent') {
+        targetElement.style.display = originDisplay
+        targetElement.style.background = originBackground
         BarcodeScanner.showBackground()
         BarcodeScanner.stopScan()
+        window.__ng_app_state.barcodeScanner.scanning = false
+    }
+
+    static isScanning() {
+        return window.__ng_app_state.barcodeScanner.scanning
     }
 }
