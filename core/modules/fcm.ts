@@ -1,12 +1,19 @@
 import { FCM } from '@capacitor-community/fcm'
 import { PushNotifications } from '@capacitor/push-notifications'
 
+// TOOD: 有實際需求的時候再處理後續
+/**
+ * @see https://capacitorjs.com/docs/apis/push-notifications
+ * @see https://github.com/capacitor-community/fcm
+ */
 export class FcmManager {
     static async install() {
         await PushNotifications.requestPermissions()
         await PushNotifications.register()
-        FCM.subscribeTo({ topic: "test" })
-            .then((r) => alert(`subscribed to topic`))
-            .catch((err) => console.log(err));
+    }
+    static subscribeTo(topic: string) {
+        return FCM.subscribeTo({
+            topic
+        })
     }
 }
