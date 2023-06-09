@@ -16,4 +16,9 @@ export class FcmManager {
             topic
         })
     }
+    static unsubscribeFrom(topic: string) {
+        return FCM.unsubscribeFrom({
+            topic
+        })
+    }
 }
