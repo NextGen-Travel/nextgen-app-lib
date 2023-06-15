@@ -6,6 +6,10 @@ import { NativeSettings, AndroidSettings, IOSSettings } from 'capacitor-native-s
 type Events = {
     appUrlOpen: {
         url: string
+        data: {
+            path: string
+            searchParams: URLSearchParams
+        }
     }
     backButton: {
         canGoBack: boolean
@@ -51,7 +55,13 @@ export class AppManager {
         let IsApp = Capacitor.isNativePlatform()
         if (IsApp) {
             await App.addListener('appUrlOpen', (data) => {
-                AppManager.event.emit('appUrlOpen', data)
+                AppManager.event.emit('appUrlOpen', {
+                    url: data.url,
+                    data: {
+                        path: data.url.split('?')[0].split('://')[1],
+                        searchParams: new URLSearchParams(data.url.split('?')[1])
+                    }
+                })
             })
             await App.addListener('backButton', (data) => {
                 AppManager.event.emit('backButton', data)
