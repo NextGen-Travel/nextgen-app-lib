@@ -1,3 +1,5 @@
+// FIXME: 這個行為是保證 app_state 有被初始化
+import '../index'
 import { t } from '../index'
 import { Capacitor } from '@capacitor/core'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner'

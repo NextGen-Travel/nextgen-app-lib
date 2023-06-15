@@ -1,3 +1,5 @@
+// FIXME: 這個行為是保證 app_state 有被初始化
+import '../index'
 import { App } from '@capacitor/app'
 import { Event } from 'power-helper'
 import { Capacitor } from '@capacitor/core'
