@@ -2037,10 +2037,10 @@ plist@^3.0.5, plist@^3.0.6:
     base64-js "^1.5.1"
     xmlbuilder "^15.1.1"
 
-power-helper@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/power-helper/-/power-helper-0.6.0.tgz#0927aa68f45f3281114d394ae96213f1e8db9b23"
-  integrity sha512-DJgEe7E5FoKXGDp+Dl4tsrqXBqCoTDqDYo98Dt1TO8gX+54UDdK1gO7VuOS1tWnHJHplQgDM+fqU6RPMRf+hdA==
+power-helper@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/power-helper/-/power-helper-0.6.2.tgz#d70bb69966e3714857c2f4003279ff8793b3a767"
+  integrity sha512-ocJ5k1g3dXZjwm3ytWM1GWIgz3fM1a/jsqeZurIOKk5FN/kIZFF8hpSTEqxySPBYLVuv3m7RC+h8HHKsWzy39Q==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
