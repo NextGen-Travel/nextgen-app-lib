@@ -6,13 +6,22 @@ import {
     SignInWithAppleOptions
 } from '@capacitor-community/apple-sign-in'
 
+window.__ng_app_state.appleLogin = {
+    cliendId: ''
+}
+
 export class AppAppleLogin {
+    static async install(params: {
+        cliendId: string
+    }) {
+        window.__ng_app_state.appleLogin.cliendId = params.cliendId
+    }
     static async signIn(params: {
-        clientId: string
+        cliendId?: string
         redirectURI: string
     }) {
         const options: SignInWithAppleOptions = {
-            clientId: params.clientId,
+            clientId: params.cliendId ?? window.__ng_app_state.appleLogin.cliendId,
             redirectURI: params.redirectURI,
             scopes: 'email name',
             state: '',

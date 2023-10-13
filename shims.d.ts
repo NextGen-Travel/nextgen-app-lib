@@ -9,6 +9,9 @@ declare global {
                 launchUrl: string
                 globEvent: Event
             }
+            appleLogin: {
+                cliendId: string
+            }
             barcodeScanner: {
                 scanning: boolean
             }
