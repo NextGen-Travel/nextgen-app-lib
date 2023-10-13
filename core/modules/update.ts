@@ -1,3 +1,4 @@
+import '../index'
 import { Capacitor } from '@capacitor/core'
 import { AppUpdate } from '@capawesome/capacitor-app-update'
 

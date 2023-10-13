@@ -1,5 +1,6 @@
-import { Capacitor } from '@capacitor/core'
+import '../index'
 import { Browser } from '@capacitor/browser'
+import { Capacitor } from '@capacitor/core'
 import { AppLauncher } from '@capacitor/app-launcher'
 export class BrowserManager {
     static open(url: string, nameType: '_blank' | '_system' = '_blank') {

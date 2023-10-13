@@ -9,6 +9,14 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@capacitor-community/apple-sign-in@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/apple-sign-in/-/apple-sign-in-5.0.0.tgz#9d2aa17fd67cb75c1fd6a7defccf5a4c46d5532b"
+  integrity sha512-Cz0cuJKv/KnIHMy9f4Gbc2kWhpxsLYv/NXNhc9mYRi9pYAdfhLSo/fvkcJSRs/g1PvNMA0FDDk0Hx2GHZLA5SQ==
+  dependencies:
+    "@types/scriptjs" "0.0.2"
+    scriptjs "^2.5.9"
+
 "@capacitor-community/barcode-scanner@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@capacitor-community/barcode-scanner/-/barcode-scanner-4.0.1.tgz#921aa5dda3d55aa888cf8dd4896fd56bdb63841d"
@@ -16,6 +24,13 @@
   dependencies:
     "@zxing/browser" "^0.1.3"
     "@zxing/library" "^0.20.0"
+
+"@capacitor-community/facebook-login@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/facebook-login/-/facebook-login-5.0.3.tgz#6db24ee22bc4e5e6ccd573fe504c28bf3e5653c3"
+  integrity sha512-MdVBkPHbtAqiVgj5YJdIzO+2DG5kBakvjkTPpnxkxEwOVCPNmshyhR5YzPqkkbG00rpgU2SArM/Ml2riceSi/A==
+  dependencies:
+    "@capacitor/core" "^5.0.0"
 
 "@capacitor-community/fcm@^5.0.1":
   version "5.0.1"
@@ -75,6 +90,13 @@
   resolved "https://registry.yarnpkg.com/@capacitor/clipboard/-/clipboard-5.0.2.tgz#22536aed507fc700667945d8cf20a4829c3067a4"
   integrity sha512-mYgh90FCIvIRM32XknvfYasNjfCFqAShiXsMOUDy4/Ci69DZr+Ft42TqtS62y3GeOeiA3r4c88239B/nXPQAZg==
 
+"@capacitor/core@^5.0.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.5.0.tgz#a66cdf196dfa3b626bf9577c0aed1702988d1017"
+  integrity sha512-w59io0ctwnb7JRng7yO2H0YLHG8uz7XARUugRfp5aYTNiG55FqdSmSMOOqGCMPRg4sEnKjJTvAa4ImCYh3Kk1w==
+  dependencies:
+    tslib "^2.1.0"
+
 "@capacitor/core@^5.0.3":
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.0.3.tgz#0eea460fa4b4249dd4a2a97d7fef08b9a7b088e7"
@@ -97,6 +119,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.2.tgz#8c95413fa02d432a22b16a1bdbde2baad74816e6"
   integrity sha512-nCkxk9lXfBmMWhvnnWG55JvEHNmj9CKlvFJPaqd/CO0epwBht2HxmFuIHeXUMKoehyYVxcNi7Gt71PY8IAGWnQ==
 
+"@capacitor/preferences@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-5.0.6.tgz#96ce925001cc41272a93b6860160fb10d335cbe0"
+  integrity sha512-aDe4wGTVSAIue6XXdUFgyz7SGszxK/Ptt/iWTydMpzc1PlZXw1XTTnciM+S+SLLNZFzXlkpXT3wMnh9t0DojUA==
+
 "@capacitor/push-notifications@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-5.0.2.tgz#1c9a6ce975ca89f9d92bfa01377c70bdd4306757"
@@ -111,6 +138,11 @@
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@capawesome/capacitor-app-update/-/capacitor-app-update-5.0.0.tgz#080d713aa3124488cb83e987a60520332ee31483"
   integrity sha512-Kpe38ACXblAuLL1Uus4lse3OmUPIQn6oMP+OmIZ6ITFNgLP9WCxyarvMnJWGskIWv7fqbtx2o8AV+DVHHn8FcA==
+
+"@codetrix-studio/capacitor-google-auth@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@codetrix-studio/capacitor-google-auth/-/capacitor-google-auth-3.3.3.tgz#359d4b205b707e4f4242087ca4e85c12b8d683fe"
+  integrity sha512-ZcePU0iwqa6+I2dn0U8ex+PmS/IiZNNw9h1TR7ncIov8Ix4ycCkFZvrOGMJcdBk6S4wptdix3QtxgopaU9P3Lw==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -376,6 +408,11 @@
   version "13.13.52"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.52.tgz#03c13be70b9031baaed79481c0c0cfb0045e53f7"
   integrity sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==
+
+"@types/scriptjs@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/scriptjs/-/scriptjs-0.0.2.tgz#09a2287221a7a341fc6b95b005e4bfb2a5403538"
+  integrity sha512-GFrUgzGYfNX3VWZwMyzr0JrBwzLv5Kes4BQBvo6hXdRy14/GBbpCiVwwB7v1o2xIEvFf+9GyznmYhuesQQjSag==
 
 "@types/semver@^7.3.12":
   version "7.3.13"
@@ -707,6 +744,11 @@ capacitor-native-settings@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/capacitor-native-settings/-/capacitor-native-settings-5.0.0.tgz#1c12aa84284ff01e1865e5675fa0f045979f0a48"
   integrity sha512-dP9N2XsohWdKdRj97aB3LTQ0x4IDB9brNJEnsWwmEWQ7VE7ZBZfDUJCR7OsjqRqp0TZMvVnJP9dHPtCMo5S7gQ==
+
+capacitor-plugin-app-tracking-transparency@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/capacitor-plugin-app-tracking-transparency/-/capacitor-plugin-app-tracking-transparency-2.0.4.tgz#0d209254d4553d1426ca51a2c34722f24ea1630f"
+  integrity sha512-K7YVR1G9JZov7atI2y4cNL8ygTgZA7b+4U27xjQwve3Qzb81y5jMNSe2OyAOheKZDBLyuqiR+wnP+vCwmHNMWg==
 
 chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.2"
@@ -2191,6 +2233,11 @@ sax@>=0.6.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+
+scriptjs@^2.5.9:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/scriptjs/-/scriptjs-2.5.9.tgz#343915cd2ec2ed9bfdde2b9875cd28f59394b35f"
+  integrity sha512-qGVDoreyYiP1pkQnbnFAUIS5AjenNwwQBdl7zeos9etl+hYKWahjRTfzAZZYBv5xNHx7vNKCmaLDQZ6Fr2AEXg==
 
 semver@^6.1.0, semver@^6.3.0:
   version "6.3.0"
