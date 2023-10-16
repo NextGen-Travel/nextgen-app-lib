@@ -32,10 +32,10 @@
   dependencies:
     "@capacitor/core" "^5.0.0"
 
-"@capacitor-community/fcm@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@capacitor-community/fcm/-/fcm-5.0.1.tgz#ecd8bb744bb98a6a7b14522225bd6bb75c2ff222"
-  integrity sha512-SYj/amxOoAyD91SUoIQ1PU//yiVHqAeYfnda0FqT4Tnwc0eWTsSHCwFBE5axynhNdluj1rXegTatdt/HKsD3bQ==
+"@capacitor-firebase/messaging@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@capacitor-firebase/messaging/-/messaging-5.1.0.tgz#a00a2322f21acfca423545c1c75ab7242f166b8d"
+  integrity sha512-3RpzZJAOw8HJchMxxNsdAXa/Jp4BHjtz8b1W9CPhBQHnRQXnSFDzkQyfAWAU37TNpPsoguwM9EQAtVfQgebLYg==
 
 "@capacitor/android@^5.0.3":
   version "5.0.3"
@@ -123,11 +123,6 @@
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-5.0.6.tgz#96ce925001cc41272a93b6860160fb10d335cbe0"
   integrity sha512-aDe4wGTVSAIue6XXdUFgyz7SGszxK/Ptt/iWTydMpzc1PlZXw1XTTnciM+S+SLLNZFzXlkpXT3wMnh9t0DojUA==
-
-"@capacitor/push-notifications@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-5.0.2.tgz#1c9a6ce975ca89f9d92bfa01377c70bdd4306757"
-  integrity sha512-zZqhklAWI4y6XG1L7HOIPwwC1aiQVgbyqu1vV/rfdEIdfHKzzKkGCUWpGGabLht4MFtl7SwvqGfAiUAhgwwtKg==
 
 "@capacitor/share@^5.0.2":
   version "5.0.2"

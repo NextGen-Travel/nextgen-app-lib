@@ -1,6 +1,5 @@
 import '../index'
-import { FCM } from '@capacitor-community/fcm'
-import { PushNotifications } from '@capacitor/push-notifications'
+import { FirebaseMessaging } from '@capacitor-firebase/messaging'
 
 // TOOD: 有實際需求的時候再處理後續
 /**
@@ -9,19 +8,16 @@ import { PushNotifications } from '@capacitor/push-notifications'
  */
 export class FcmManager {
     static async install() {
-        await PushNotifications.requestPermissions()
-        await PushNotifications.register()
-    }
-    static clearAll() {
-        return FCM.deleteInstance()
+        const result = await FirebaseMessaging.requestPermissions()
+        return result.receive
     }
     static subscribeTo(topic: string) {
-        return FCM.subscribeTo({
+        return FirebaseMessaging.subscribeToTopic({
             topic
         })
     }
     static unsubscribeFrom(topic: string) {
-        return FCM.unsubscribeFrom({
+        return FirebaseMessaging.unsubscribeFromTopic({
             topic
         })
     }
