@@ -2,6 +2,27 @@ import '../index'
 import { Preferences } from '@capacitor/preferences'
 
 export class PreferencesManager {
+    static exportObject() {
+        return {
+            keys: async() => {
+                const { keys } = await Preferences.keys()
+                return keys
+            },
+            getItem: async (key: string) => {
+                const { value } = await Preferences.get({ key })
+                return value
+            },
+            setItem: async (key: string, value: any) => {
+                await Preferences.set({
+                    key,
+                    value
+                })
+            },
+            removeItem: async (key: string) => {
+                return Preferences.remove({ key })
+            }
+        }
+    }
     static getItem(key: string) {
         return Preferences.get({
             key

@@ -11,6 +11,12 @@ export class FcmManager {
         const result = await FirebaseMessaging.requestPermissions()
         return result.receive
     }
+    static async clear() {
+        const hasToken = await FirebaseMessaging.getToken()
+        if (hasToken) {
+            await FirebaseMessaging.deleteToken()
+        }
+    }
     static subscribeTo(topic: string) {
         return FirebaseMessaging.subscribeToTopic({
             topic
