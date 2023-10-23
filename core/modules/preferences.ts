@@ -46,7 +46,7 @@ export class PreferencesManager {
         const keys = await Preferences.keys()
         return keys.keys
     }
-    static async length() {
+    static async size() {
         const keys = await Preferences.keys()
         return keys.keys.length
     }
