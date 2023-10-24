@@ -9,6 +9,12 @@ import { FirebaseMessaging } from '@capacitor-firebase/messaging'
 export class FcmManager {
     static async install() {
         const result = await FirebaseMessaging.requestPermissions()
+        await FirebaseMessaging.addListener('notificationActionPerformed', (notification) => {
+            console.log('notificationActionPerformed', notification)
+        })
+        await FirebaseMessaging.addListener('notificationReceived', (notification) => {
+            console.log('notificationReceived', notification)
+        })
         return result.receive
     }
     static async clear() {
