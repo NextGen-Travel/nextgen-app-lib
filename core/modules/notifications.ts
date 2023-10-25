@@ -4,6 +4,7 @@ import { LocalNotifications } from '@capacitor/local-notifications'
 
 type Notification = {
     body: string
+    icon: string
     title: string
 }
 
@@ -54,7 +55,10 @@ export class NotificationManager {
                     notifications: [
                         {
                             id: randId(),
-                            ...item
+                            smallIcon: item.icon,
+                            largeIcon: item.icon,
+                            title: item.title,
+                            body: item.body
                         }
                     ]
                 })
