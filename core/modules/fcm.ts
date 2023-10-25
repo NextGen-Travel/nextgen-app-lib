@@ -38,7 +38,11 @@ export class FcmManager {
     static get on() {
         return event.on.bind(event)
     }
-    static async clear() {
+    static async getToken() {
+        const result = await FirebaseMessaging.getToken()
+        return result.token
+    }
+    static async deleteToken() {
         const hasToken = await FirebaseMessaging.getToken()
         if (hasToken) {
             await FirebaseMessaging.deleteToken()
