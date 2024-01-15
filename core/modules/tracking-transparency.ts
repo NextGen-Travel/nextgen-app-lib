@@ -4,7 +4,7 @@ import {
     AppTrackingStatusResponse
 } from 'capacitor-plugin-app-tracking-transparency'
 
-export class AppTrackingStatusResponseLogin {
+export class TrackingTransparency {
     /**
      * @returns {Promise<'authorized'(允許) | 'denied'(拒絕) | 'notDetermined'(未決定) | 'restricted'(受限)>}
      */
@@ -19,5 +19,10 @@ export class AppTrackingStatusResponseLogin {
     static async getStatus(): Promise<AppTrackingStatusResponse> {
         const response = await AppTrackingTransparency.getStatus()
         return response
+    }
+
+    static async isAllow() {
+        const response = await TrackingTransparency.getStatus()
+        return response.status === 'authorized'
     }
 }
