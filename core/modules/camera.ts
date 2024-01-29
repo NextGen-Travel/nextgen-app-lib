@@ -52,14 +52,18 @@ export class CameraManager {
         }
     }
 
-    static async getPhoto(options = {
-        allowEditing: false
+    static async getPhoto(options: {
+        allowEditing?: boolean
+        quality?: 'low' | 'medium' | 'high'
+    } = {
+        allowEditing: false,
+        quality: 'high'
     }) {
         let { pass, failType } = await CameraManager.requestPermissions()
         if (pass) {
             const image = await Camera.getPhoto({
-                quality: 100,
-                allowEditing: options.allowEditing,
+                quality: options.quality === 'low' ? 50 : options.quality === 'medium' ? 75 : 100,
+                allowEditing: !!options.allowEditing,
                 resultType: CameraResultType.Base64,
                 promptLabelHeader: t('SelectPictureSource'),
                 promptLabelCancel: t('Cancel'),
