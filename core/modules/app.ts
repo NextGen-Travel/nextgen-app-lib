@@ -1,6 +1,7 @@
 import '../index'
 import { App } from '@capacitor/app'
 import { Event } from 'power-helper'
+import { AppUpdate } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
 import { NativeSettings, AndroidSettings, IOSSettings } from 'capacitor-native-settings'
 
@@ -38,6 +39,11 @@ export class AppManager {
 
     static get event(): Event<Events> {
         return window.__ng_app_state.app?.globEvent
+    }
+
+    static async getCurrentVersion() {
+        const { currentVersion } = await AppUpdate.getAppUpdateInfo()
+        return currentVersion
     }
 
     static async getLaunchUrl() {
